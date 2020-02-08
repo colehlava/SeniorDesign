@@ -1,7 +1,7 @@
 # SeniorDesign2020 UCSC: Hands Free Inspection
 
 ## Collaborators
-(Only out your name here if you'd like it to be public)
+(Only put your name here if you'd like it to be public)
 
 William Shaddix
 

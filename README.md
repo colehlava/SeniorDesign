@@ -1,4 +1,4 @@
-# SeniorDesign2020 UCSC
+# SeniorDesign2020 UCSC: Hands Free Inspection
 
 ## Collaborators
 (Only out your name here if you'd like it to be public)

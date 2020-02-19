@@ -4,7 +4,9 @@
 (Only put your name here if you'd like it to be public)
 
 Cole Hlava
+
 Jacob Lambert
+
 William Shaddix
 
 ## Overview

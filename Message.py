@@ -101,12 +101,14 @@ def main():
         try: 
             host_name = socket.gethostname() 
             ip_address = socket.gethostbyname(host_name) 
+            #ip_address = '169.233.136.70'
             print("IP = " + ip_address)
         except: 
             print("Unable to get host IP")
 
         # Uncomment to enter IP manually
-        ip_address = input('Enter recipients IP address: ') 
+        #ip_address = input('Enter recipients IP address: ') 
+        print("About to connect")
 
         # Attempt to connect to host
         while True:

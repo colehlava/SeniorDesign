@@ -1,7 +1,6 @@
 # File name:   streamVideo.py
 # Description: Runs video stream application.
 
-import numpy as np
 import cv2
 import os
 import json

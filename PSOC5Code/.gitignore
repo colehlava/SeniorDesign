@@ -1,0 +1,10 @@
+*.log
+*.Jacob
+*.html
+*codegentemp/
+*.rpt
+*.cyfit
+*.cycdx
+*cortexM3/
+*Export/
+*Generated_Source/

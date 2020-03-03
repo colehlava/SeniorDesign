@@ -8,3 +8,4 @@
 *cortexM3/
 *Export/
 *Generated_Source/
+*.svd

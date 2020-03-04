@@ -1,7 +1,7 @@
 /* The knob interface that sends the data to USB for the RPi */
 
 #include "project.h"
-
+#include <stdio.h>
 #define TRUE 1
 #define FALSE 0
 
@@ -25,23 +25,43 @@ int main(void){
 	TimerInt_StartEx(TimerInt);
 
 	// Init Components
+	Timer_1_Init();
+	Timer_1_Start();
 	AMux_1_Start();
 	ADC_SAR_1_Start();
+	ADC_SAR_1_StartConvert();
+	
+	LCD_Char_1_Init();
+	
 	USBFS_1_Start(USBFS_DEVICE, USBFS_1_5V_OPERATION);
+	USBFS_1_Init();
+
+	while (0u != USBFS_1_GetConfiguration());
 	
 	// declare struct for storing knob values
-	uint8 knobs[KNOBCOUNT];	
+	uint8 knobs[KNOBCOUNT];
+	char string1[15];
+	char string2[15];
 
+	int j;
 	for(;;){
 		if(triggered){
 			// Read the ADC and store to struct
 			int i;
 			for(i = 0; i < KNOBCOUNT; i++){
 				AMux_1_Select(i);
-				knobs[i] = ADC_SAR_1_GetResult8();
+				for(j = 0; j < 2<<6; j++);
+				ADC_SAR_1_IsEndConversion(ADC_SAR_1_WAIT_FOR_RESULT);
+				knobs[i] = ADC_SAR_1_GetResult16()>>4;
 			}
-
-			USBFS_1_LoadInEP(IN_EP_NUM, knobs, 1);
+			sprintf(string1, "%3d %3d %3d", knobs[5], knobs[4], knobs[3]);
+			sprintf(string2, "%3d %3d %3d", knobs[2], knobs[1], knobs[0]);
+			LCD_Char_1_ClearDisplay();
+			LCD_Char_1_PrintString(string1);
+			LCD_Char_1_Position(1,0);
+			LCD_Char_1_PrintString(string2);
+			
+			USBFS_1_LoadInEP(IN_EP_NUM, knobs, 4);
 			triggered = FALSE;
 		}
 	}

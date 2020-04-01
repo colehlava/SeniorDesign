@@ -3,11 +3,12 @@
 <!--This file is machine generated and read. It is not intended to be edited by hand.-->
 <!--Due to this, there is no schema for this file.-->
 <CyGuid_2867d519-54d2-4c01-9830-c51cb08bc3dd type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWorkspaceSerialize" version="5" xml_contents_version="3" name="SeniorDesignInput" persistent="SeniorDesignInput.cywrk" platform="NOT_USED">
-<current_project name=".\KnobInput.cydsn\KnobInput.cyprj" />
+<current_project name="..\SeniorDesignRemotePSoC\RemotePSoC.cydsn\RemotePSoC.cyprj" />
 <wrkspc_folders />
 <files />
 <projects>
 <v>.\KnobInput.cydsn\KnobInput.cyprj</v>
+<v>..\SeniorDesignRemotePSoC\RemotePSoC.cydsn\RemotePSoC.cyprj</v>
 </projects>
 <workspace_id v="08fe9b84-1c98-4be4-a953-79c1a411efbe" />
 <WriteAppVersionLastSavedWith v="4.2.0.641" />

@@ -33,10 +33,11 @@ int main(void){
 	
 	LCD_Char_1_Init();
 	
+	// USB code needs work
 	USBFS_1_Start(USBFS_DEVICE, USBFS_1_5V_OPERATION);
-	USBFS_1_Init();
 
-	while (0u != USBFS_1_GetConfiguration());
+	// wait until device is enumerated by host
+	while (0u == USBFS_1_GetConfiguration());
 	
 	// declare struct for storing knob values
 	uint8 knobs[KNOBCOUNT];
@@ -61,8 +62,14 @@ int main(void){
 			LCD_Char_1_Position(1,0);
 			LCD_Char_1_PrintString(string2);
 			
-			USBFS_1_LoadInEP(IN_EP_NUM, knobs, 4);
 			triggered = FALSE;
+		
+			// Send Data
+			// Wait until IN buffer become empty (host has read the data)
+			while (USBFS_1_IN_BUFFER_EMPTY != USBFS_1_GetEPState(IN_EP_NUM));
+		
+			// Put Data into IN endpoint buffer
+			USBFS_1_LoadInEP(IN_EP_NUM, knobs, KNOBCOUNT);
 		}
 	}
 }

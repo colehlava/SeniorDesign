@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <libusb.h>
 
-#define MESSAGE_SIZE 16
+#define MESSAGE_SIZE 1
 
 int main (int argc, char * argv[]) {
 
@@ -66,10 +66,10 @@ int main (int argc, char * argv[]) {
                     &rcvd_bytes, // Number of bytes actually received
                     0 // Timeout in milliseconds (0 to disable timeout)
                     );
-  
+
     // Write to file if read was successful, otherwise throw an error
     if (return_val == 0) {
-        fputs(rx_data, fp);
+        fputc(rx_data, fp); // use fputs() if MESSAGE_SIZE > 1
     }
     else {
       perror("Bulk transfer failed");

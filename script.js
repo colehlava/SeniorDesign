@@ -1,3 +1,4 @@
+//This javascript will add the value of the slider to the end of the slider
 $(document).ready(function() {
 
     const $valueSpan = $('.valueSpan');

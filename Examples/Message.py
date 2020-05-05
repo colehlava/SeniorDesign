@@ -1,72 +1,52 @@
-# File name:   streamVideo.py
-# Description: Streams video from remote to local through TCP socket.
+# File name:   Message.py
+# Description: Runs messaging application.
 
-import cv2
 import os
 import json
 import time
-import pickle
 import signal
 import socket
 import threading
 import argparse
 
 def readSocket(connection, messageSize):
-    message = b""
+    message = ""
 
     while len(message) < messageSize:
         try:
-            message += connection.recv(messageSize)
+            message += connection.recv(messageSize).decode()
+
         except ValueError:
             raise SystemExit
         except socket.error:
             print("Error while receiving message")
-            return b""
+            return ""
 
     return message
 
 
 def sendData(s):
-    cap = cv2.VideoCapture(0)
-
     while True:
-        # Capture frame
-        ret, frame = cap.read()
+        message = input('')
+        messageSize = len(message)
+        messageSizeStr = "%04d" % messageSize
 
         try:
-            # Pickle the frame and send it over the socket
-            sendable = pickle.dumps(frame)
-            s.send(sendable)
+            s.send(messageSizeStr.encode())
+            s.send(message.encode())
+            time.sleep(1)
+
         except socket.error:
             print("Failed to send message")
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    # Release capture on program termination
-    cap.release()
-
 
 def receiveData(connection):
-    messageSize = 921764
+    headerSize = 4
 
     while True:
-        # Receive frame
-        pickledFrame = readSocket(connection, messageSize)
-        frame = pickle.loads(pickledFrame)
-
-        # Format frame into image
-        #image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) # grayscale image
-        image = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) # HSV image
-
-        # Display the resulting frame
-        cv2.imshow('frame', image)
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    # Destroy window on program termination
-    cv2.destroyAllWindows()
+        messageSize = int( readSocket(connection, headerSize) )
+        message = readSocket(connection, messageSize)
+        print("\n\n>>> " + message + "\n")
 
 
 # ====================================================================
@@ -111,6 +91,10 @@ def main():
         receiveThread = threading.Thread(target=receiveData, args=(connection,))
         receiveThread.start()
 
+        # Start sending thread
+        sendThread = threading.Thread(target=sendData, args=(connection,))
+        sendThread.start()
+
     # Client mode
     else:
         # Get IP address
@@ -136,6 +120,10 @@ def main():
             except:
                 print("Connection refused. Attempting to reconnect...")
                 time.sleep(5)
+
+        # Start receiving thread
+        receiveThread = threading.Thread(target=receiveData, args=(s,))
+        receiveThread.start()
 
         # Start sending thread
         sendThread = threading.Thread(target=sendData, args=(s,))

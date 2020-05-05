@@ -9,8 +9,30 @@ videoFeed = cv2.VideoCapture(0)
 outputFrame = None
 frameLock = threading.Lock()
 
-@app.route("/")
+# index
+@app.route("/", methods=['GET', 'POST'])
 def index():
+    # Read button value inputs from user
+    if flask.request.method == 'POST':
+        if flask.request.form.get('on') == 'on':
+            with open('button_status.txt', 'w') as bs:
+                bs.write("1")
+        elif flask.request.form.get('off') == 'off':
+            with open('button_status.txt', 'w') as bs:
+                bs.write("0")
+
+    # Return the rendered html file
+    return flask.render_template("index.html")
+
+
+# Respond to slider input from user
+@app.route("/speed_slider", methods=['GET', 'POST'])
+def updateSpeed():
+    # Read speed slider value from user
+    if flask.request.method == 'POST':
+        with open('speed.txt', 'w') as s:
+            s.write(flask.request.form['speed'])
+
     # Return the rendered html file
     return flask.render_template("index.html")
 
@@ -43,7 +65,6 @@ def generate():
             # Encode the frame into jpg format
             (flag, encodedImage) = cv2.imencode(".jpg", outputFrame)
 
-        # @NOTE make sure this is correct rv logic
         # Ensure the frame was successfully encoded
         if not flag:
             continue
@@ -52,7 +73,7 @@ def generate():
         yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
 
 
-# Generate object for web application
+# Generate video frames for web application
 @app.route("/video_feed")
 def video_feed():
     # Return the generated response and media type

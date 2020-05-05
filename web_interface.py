@@ -1,5 +1,5 @@
 # web_interface.py
-# Creates html file to stream video feed to web browser.
+# Interface between backend application and web app.
 
 import flask, cv2, datetime, threading, argparse
 

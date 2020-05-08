@@ -1,0 +1,18 @@
+
+body::before {
+  content: "";
+
+  width: 175%;
+  height: 175%;
+  background-image: url("SDes-back.jpg");
+  opacity: 0.2;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+
+

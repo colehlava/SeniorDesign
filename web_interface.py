@@ -25,13 +25,25 @@ def index():
     return flask.render_template("index.html")
 
 
-# Respond to slider input from user
-@app.route("/speed_slider", methods=['GET', 'POST'])
-def updateSpeed():
+# Respond to position slider input from user
+@app.route("/position_slider", methods=['GET', 'POST'])
+def updateArmPosition():
     # Read speed slider value from user
     if flask.request.method == 'POST':
-        with open('speed.txt', 'w') as s:
-            s.write(flask.request.form['speed'])
+        with open('position_val.txt', 'w') as f:
+            f.write(flask.request.form['speed'])
+
+    # Return the rendered html file
+    return flask.render_template("index.html")
+
+
+# Respond to rotation slider input from user
+@app.route("/rotation_slider", methods=['GET', 'POST'])
+def updateCameraAngle():
+    # Read speed slider value from user
+    if flask.request.method == 'POST':
+        with open('rotation_val.txt', 'w') as f:
+            f.write(flask.request.form['angle'])
 
     # Return the rendered html file
     return flask.render_template("index.html")

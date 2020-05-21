@@ -10,41 +10,49 @@
 </head>
 
 <body>
-    <div style="background-color:lightblue">
+    <div style="background-color:rgb(200,100,50);">
         <!-- Insert current video frame -->
         <div align="center">
             <h1>Live Feed from the Plant</h1>
             <img src="{{ url_for('video_feed') }}">
         </div>
 
-        <!-- Insert temperature and humidity readings -->
-        <div align="center">
-            <h1>Sensor Readings</h1>
-            <h2>Temperature: 85 <span>&#176;</span>F<h2>
-            <h2>Humidity:    34%<h2>
-        </div>
-
-        <!-- Respond to buttons -->
+        <!-- Respond to power buttons -->
         <form method="post" action="/">
+            <h2>Power</h2>
             <input type="submit" name="on" value="on">
             <input type="submit" name="off" value="off">
+            <br><br><br>
         </form>
 
-        <!-- Respond to position slider -->
-        <form method="post" action="/position_slider">
-            <div class="posistionslidecontainer" id="slide_container1" align="center">
-                <input type="range" id="speed" name="speed" min="0" max="99">
-                <input type="submit" value="Set Arm Position">
-            </div>
-        </form>
+        <!-- Insert temperature and humidity readings -->
+        <div align="left" style="background-color:rgb(250,250,120); float:left;">
+            <h2>Sensor Readings</h2>
+            <h3>Temperature: 24<span>&#176;</span> C<h3>
+            <h3>Humidity: 35%<h3>
+        </div>
 
-        <!-- Respond to rotation slider -->
-        <form method="post" action="/rotation_slider">
-            <div class="rotationslidecontainer" id="slide_container2" align="center">
-                <input type="range" id="angle" name="angle" min="0" max="180">
-                <input type="submit" value="Set Camera angle">
-            </div>
-        </form>
+        <div align="center">
+            <h1>Controls</h1>
+
+            <!-- Respond to position slider -->
+            <form method="post" action="/position_slider">
+                <div class="posistionslidecontainer" id="slide_container1" align="center">
+                    <input type="range" id="speed" name="speed" min="0" max="99">
+                    <input type="submit" value="Set Arm Position">
+                </div>
+            </form>
+
+            <!-- Respond to rotation slider -->
+            <form method="post" action="/rotation_slider">
+                <div class="rotationslidecontainer" id="slide_container2" align="center">
+                    <input type="range" id="angle" name="angle" min="0" max="180">
+                    <input type="submit" value="Set Camera angle">
+                </div>
+            </form>
+        </div>
+        <br>
+        <br>
     </div>
 </body>
 

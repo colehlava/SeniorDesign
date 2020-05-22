@@ -11,31 +11,24 @@
 
 <body>
     <div style="background-color:rgb(200,100,50);">
+        <!-- Insert temperature and humidity readings -->
+        <div align="center" style="background-color:rgb(250,250,50); float:left; width:15%;">
+            <h2>Sensor Readings</h2>
+            <h3>Temperature: 24<span>&#176;</span> C<h3>
+            <h3>Humidity: 35%<h3>
+        </div>
+
         <!-- Insert current video frame -->
         <div align="center">
             <h1>Live Feed from the Plant</h1>
             <img src="{{ url_for('video_feed') }}">
         </div>
 
-        <!-- Respond to power buttons -->
-        <form method="post" action="/">
-            <h2>Power</h2>
-            <input type="submit" name="on" value="on">
-            <input type="submit" name="off" value="off">
-            <br><br><br>
-        </form>
-
-        <!-- Insert temperature and humidity readings -->
-        <div align="left" style="background-color:rgb(250,250,120); float:left;">
-            <h2>Sensor Readings</h2>
-            <h3>Temperature: 24<span>&#176;</span> C<h3>
-            <h3>Humidity: 35%<h3>
-        </div>
-
+        <!-- Controls -->
         <div align="center">
             <h1>Controls</h1>
 
-            <!-- Respond to position slider -->
+            <!-- Arm position slider -->
             <form method="post" action="/position_slider">
                 <div class="posistionslidecontainer" id="slide_container1" align="center">
                     <input type="range" id="speed" name="speed" min="0" max="99">
@@ -43,15 +36,22 @@
                 </div>
             </form>
 
-            <!-- Respond to rotation slider -->
+            <!-- Camera rotation slider -->
             <form method="post" action="/rotation_slider">
                 <div class="rotationslidecontainer" id="slide_container2" align="center">
                     <input type="range" id="angle" name="angle" min="0" max="180">
                     <input type="submit" value="Set Camera angle">
                 </div>
             </form>
+
+            <!-- Power buttons -->
+            <form method="post" action="/">
+                <h2>Power</h2>
+                <input type="submit" name="on" value="on">
+                <input type="submit" name="off" value="off">
+                <br><br><br>
+            </form>
         </div>
-        <br>
         <br>
     </div>
 </body>
